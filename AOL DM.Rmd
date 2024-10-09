@@ -1,0 +1,704 @@
+---
+title: "Analisis Penjualan VGSales"
+date: "June 16, 2024"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+knitr:
+  opts_chunk: message = FALSE warning = FALSE
+---
+<style>
+  h1.title {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  h4.author, h4.date {
+    text-align: center; 
+  }
+  h4.date {
+    margin-bottom: 45px; 
+  }
+</style>
+
+<span style="font-size: 1.5em;">**Group 10:**</span>  
+ <span style="font-size: 1.2em;">1. Kevin Husodo (2602126896)</span>  
+  <span style="font-size: 1.2em;">2. Putri Febiyani (2602181875)</span>  
+   <span style="font-size: 1.2em;">3. Audric Nagata (2602090435)  </span>  
+<div style="margin-bottom: 25px;"></div>
+
+
+#### **Table of Contents**:    
+1. [Introduction](#introduction)
+    - [A. Purpose, Context, and Structure of the Report](#a-purpose-context-and-structure-of-the-report)
+    - [B. Introduction to the Topic or Issue Addressed](#b-introduction-to-the-topic-or-issue-addressed)
+    - [C. Significance of the Analysis](#c-significance-of-the-analysis)
+    - [D. Relevance and Potential Implications](#d-relevance-and-potential-implications)
+    - [E. Target Audience](#e-target-audience)
+    - [F. Objectives and Analytical Question](#f-objectives-and-analytical-question)
+    - [G. Methods and Analytical Techniques](#g-methods-and-analytical-techniques)
+    - [H. Assumptions and Limitations](#h-assumptions-and-limitations)
+    - [I. Personal Relevance](#i-personal-relevance)
+2. [Data Description](#data-description)
+    - [A. Dataset Description](#a-dataset-description)
+    - [B. Variables Involved](#b-variables-involved)
+    - [C. Summary Data](#c-summary-data)
+3. [Data Preprocessing](#data-preprocessing)
+4. [Data Exploration](#data-exploration)
+5. [Statistical Analysis](#statistical-analysis)
+6. [Discussion](#discussion)
+
+<div style="margin-bottom: 40px;"></div>
+
+### **1.	Introduction**
+<div style="margin-bottom: 20px;"></div>
+##### **A. Purpose, Context, and Structure of the Report**
+
+<div style="text-align: justify;">
+This report aims to analyze video game sales data from 2006 to 2010, sourced from a dataset available on the Kaggle platform. Kaggle is renowned for its rich data sources frequently utilized by data analysts and researchers for various analytical projects. The report provides comprehensive insights into video game sales trends, genre popularity, regional sales performance, and an analysis of leading platforms and publishers during the specified period.    
+
+**The structure of this report includes several main sections:**  
+
+- **Introduction**: Outlining the objectives, context, and structure of the report.  
+- **Dataset Description**: Explaining the data source, data structure, and variables used in the analysis.  
+- **Exploratory Data Analysis (EDA)**: Presenting initial analysis results, including sales trends, genre popularity, and regional performance comparisons.  
+- **Key Insights**: Identifying the main findings from the data analysis.  
+- **Conclusion**: Summarizing key findings and providing recommendations for further actions.      
+</div>
+
+<div style="margin-bottom: 20px;"></div>
+##### **B. Introduction to the Topic or Issue Addressed**
+
+<div style="text-align: justify;">
+The main topic of this report is the analysis of video game sales exceeding 100,000 copies from 2006 to 2010. Video game sales are a crucial indicator reflecting the popularity and success of games in the market.
+
+**The issues addressed in this report include:**  
+
+- How did video game sales trends evolve from year to year during the period from 2006 to 2010?  
+- Which video game genres were most popular, and how did their popularity evolve during this period?  
+- How did video game sales perform in various geographic regions such as North America, Europe, Japan, and other regions?  
+- Which gaming platforms exhibited the best performance during the analysis period?  
+- Who were the publishers with the highest sales, and what were their successful games?  
+</div>
+
+<div style="margin-bottom: 20px;"></div>
+##### **C. Significance of the Analysis**  
+
+<div style="text-align: justify;">
+This analysis is significant as it provides a deep understanding of the dynamics of the gaming industry from 2006 to 2010. The video game industry is one of the most dynamic and rapidly evolving entertainment sectors. By understanding sales trends, genre popularity, and regional performance, game developers, publishers, and marketers can make more informed and strategic decisions. This analysis is valuable not only for understanding the current market conditions but also for predicting future trends and identifying new opportunities.  
+</div>  
+
+<div style="margin-bottom: 20px;"></div>
+##### **D. Relevance and Potential Implications**  
+
+<div style="text-align: justify;">
+This analysis is relevant to various stakeholders interested in the dynamics of the gaming industry. The findings can be utilized for:  
+
+- **Game Development**: Identifying genres and platforms worthy of focus in game development.  
+- **Marketing Strategies**: Optimizing marketing strategies based on regional sales performance and market trends.  
+- **Investment Decisions**: Assisting investors in understanding market dynamics and identifying potential areas for investment.  
+- **Competitive Analysis**: Providing insights into successful titles and strategies of competitors in the gaming industry.  
+</div>  
+
+<div style="margin-bottom: 20px;"></div>
+##### **E. Target Audience**  
+
+<div style="text-align: justify;">
+
+This report is intended for:  
+
+- **Researchers**: Interested in data analysis of the gaming industry and market trends.  
+- **Stakeholders in the Gaming Industry**: Including developers, publishers, and marketers needing insights to support their business decisions.  
+- **Investors**: Seeking to understand the dynamics of the gaming market for better investment decisions.  
+- **General Audience**: Anyone interested in insights into video game sales and the development of this industry.  
+</div>  
+
+<div style="margin-bottom: 20px;"></div>
+##### **F. Objectives and Analytical Questions**  
+
+<div style="text-align: justify;">
+The main objectives of this analysis are to answer several key questions:  
+
+1. What were the video game sales trends from year to year during the period from 2006 to 2010?  
+2. Which video game genres were the most popular, and how did their popularity evolve during this period?  
+3. How did sales performance vary across different regions?  
+4. Who were the publishers with the highest sales, and what were their successful games?  
+5. How did various gaming platforms perform over time?  
+</div>  
+
+<div style="margin-bottom: 20px;"></div>
+##### **G. Methods and Analytical Techniques**    
+
+<div style="text-align: justify;">
+This analysis employs Exploratory Data Analysis (EDA) methods, including:  
+
+- **Data Visualization**: Using charts and graphs to identify trends and patterns in sales data.  
+- **Statistical Analysis**: Applying statistical methods to understand data distributions and relationships between variables.  
+- **Data Segmentation**: Grouping data by region, genre, and platform for in-depth and comparative analysis.  
+</div>  
+
+<div style="margin-bottom: 20px;"></div>
+##### **H. Assumptions and Limitations**    
+
+<div style="text-align: justify;">
+Some assumptions and limitations of this analysis include:  
+
+- **Data Accuracy**: The data used is sourced from Kaggle for the period 2006-2010. While Kaggle is known for rich datasets, it may not encompass all recent changes in the video game industry. For example, trends from 2017-2020 may not be well-reflected due to limited data availability for those years.  
+  
+- **Time Constraints**: The analysis is constrained by the timeframe of data from 2006 to 2010. Significant changes in market preferences and technology in the gaming industry after 2010 may not be fully captured in this report.  
+
+- **Lack of Recent Data**: Despite efforts to incorporate newer data, availability for years 2017-2020 has been limited or inadequate in the available sources. This may affect the balance of representation in our visualizations and analysis.  
+
+- **Industry Dynamics**: The gaming industry is a highly dynamic market with rapid changes in technology, consumer preferences, and global trends. These factors can influence the analysis outcomes based on historical data used in this report.  
+
+- **Interpretation of Results**: The results of this analysis should be understood in the context of the timeframe and data used. Interpretations regarding genre preferences, platforms, and business strategies should be adjusted for contextual changes and current market dynamics, which may differ from the period of 2006-2010.  
+</div> 
+
+<div style="margin-bottom: 20px;"></div>
+##### **I. Personal Relevance**      
+
+<div style="text-align: justify;">
+This analysis is worth reading as it provides actionable insights into business strategies within the gaming industry. For us, this analysis is compelling as it combines our interest in data and the gaming industry, offering an opportunity to apply data analysis skills in a real-world context. Understanding trends and preferences in the gaming industry can be crucial for success across various aspects of the video game business. This analysis also provides an opportunity to delve deeper into how specific factors impact game success, which can be highly valuable to anyone involved in this dynamic industry.
+</div>  
+
+
+### **2.	Data Description**
+<div style="margin-bottom: 20px;"></div>
+
+##### **A. Dataset Description**   
+<div style="text-align: justify;">
+The dataset contains information on video game sales exceeding 100,000 copies. It was sourced from Kaggle, which originally obtained the data from vgchartz.com. The dataset spans from 1980 to 2020, but the analysis focuses on the years 2006 to 2010.  
+</div> 
+<div style="margin-bottom: 20px;"></div>
+##### **B. Variables Involved**
+
+<div style="text-align: justify;">
+**1. Name**:
+
+  - Description: Provides the name of each video game in the dataset.  
+  - Significance: This variable serves as a unique identifier for each data entry, distinguishing between different games for analysis purposes.
+  
+**2. Platform**:
+
+  - Description: Indicates the platform on which each video game was released (e.g., PC, PS4, Xbox One).  
+  - Significance: The release platform can influence the game's market accessibility. Analyzing platforms also offers insights into consumer preferences for specific gaming platforms.  
+  
+**3. Year**:
+
+  - Description: Represents the year when each video game was released.  
+  - Significance: Information on release year is crucial for understanding sales patterns over time. Changes in technology and consumer preferences can impact game sales performance annually.  
+  
+**4. Genre**:
+
+  - Description: Specifies the category or genre of each video game (e.g., action, adventure, sports).  
+  - Significance: Game genres provide insights into thematic preferences and popular game types among consumers. Genre analysis aids in understanding market trends and strategic game development *decisions.  
+  
+**5. Publisher**:
+
+  - Description: Names the publisher or company that released the video game.
+  - Significance: Identifying the publisher is important as publishers often employ distinct marketing and distribution strategies that influence game sales performance. Major publishers also wield significant impact on game popularity and distribution.
+  
+**6. NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales**:
+
+  - Description: Each column represents video game sales in millions of copies in specific regions (North America, Europe, Japan, other regions worldwide, and total global sales).  
+  - Significance: These variables offer a comprehensive view of the commercial performance of games across different regional and global markets. Understanding sales distribution across regions aids in adjusting marketing and distribution strategies to enhance revenue.  
+
+</div>
+<div style="margin-bottom: 20px;"></div>
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
+# Visualizations
+library(ggplot2) 
+library(corrplot)
+library(reshape2)
+library(tidyr)
+library(knitr)
+# Data Manipulation
+library(dplyr)
+
+```
+
+
+```{r, echo=FALSE, results='hide'}
+dataVG <-  read.csv("vgsales.csv")
+```
+
+##### **C. Summary Data **  
+<div style="margin-bottom: 20px;"></div>
+```{r echo=FALSE}
+dataVG_summary <- summary(dataVG)
+dataVG_summary[is.na(dataVG_summary)] <- ""
+kable(dataVG_summary, format = "markdown")
+```
+
+<div style="text-align: justify;">
+The summary data provides a comprehensive overview of video game sales from a dataset comprising 16,598 entries. Key variables include rank, game name, platform, release year, genre, and publisher, all categorized as character data types. Sales figures across four major regions (North America, Europe, Japan, and other regions) are reported in millions of copies, with global sales also in million units. The rank ranges from 1 to 16,600, with median and mean values around 8,300, indicating a relatively even distribution. The significant difference between median regional and global sales, notably a global median of 0.17 million copies, highlights varied market preferences.  
+</div>
+```{r, include=FALSE}
+str(dataVG)
+colnames(dataVG)
+```
+```{r}
+# Reshape the data
+df_long <- dataVG %>%
+  pivot_longer(cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
+               names_to = "Sales_Type", values_to = "Sales")
+
+# Plotting the combined boxplots using facets
+ggplot(df_long, aes(x = "", y = Sales)) +
+  geom_boxplot() +
+  facet_wrap(~ Sales_Type, scales = "free_y", labeller = as_labeller(c(
+    NA_Sales = "NA Sales",
+    EU_Sales = "EU Sales",
+    JP_Sales = "JP Sales",
+    Other_Sales = "Other Sales",
+    Global_Sales = "Global Sales"
+  ))) +
+  ggtitle("Boxplots of Sales Data") +
+  xlab("") + ylab("Sales")
+```
+```{r, include=FALSE}
+# select numeric columns to see correlation
+correlation_matrix <- cor(dataVG[7:11])
+print(correlation_matrix)
+```
+```{r}
+corrplot(correlation_matrix, method="color", type="upper", order="hclust")
+```
+
+```{r}
+total_sales <- aggregate(Global_Sales ~ Year, data = dataVG, sum)
+
+# Get top 5 years with highest global sales
+top5_years <- head(total_sales[order(-total_sales$Global_Sales), ], 5)
+
+ggplot(top5_years, aes(x = reorder(Year, -Global_Sales), y = Global_Sales, group = 1)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "black", size = 3) +
+  labs(title = "Top 5 Years with Highest Global Sales", x = "Year", y = "Global Sales (in millions)") +
+  theme(plot.background = element_rect(color = "black", size = 1)) +
+  geom_text(aes(label = Global_Sales), vjust = -1, color = "black", size = 3)
+
+
+```
+
+### **3.	Data Preprocessing**  
+<div style="text-align: justify;">
+Here are the steps of preprocessing applied to the dataset, along with their reasons
+
+##### **A. Prepare data**  
+```{r message=FALSE}
+# Visualizations
+library(ggplot2) 
+library(corrplot)
+library(reshape2)
+library(tidyr)
+library(knitr)
+library(plotly)
+# Data Manipulation
+library(dplyr)
+```
+
+**Libraries Overview**:  
+
+| Library   | Description                                                                                                                                                 |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ggplot2   | A core library for creating customizable data visualizations in R. It uses a layered graphics grammar to create plots step-by-step, offering flexibility.   |
+| corrplot  | Used to visualize correlation matrices in R with various visualization methods.                                                                              |
+| reshape2  | R library for restructuring data between wide and long formats, facilitating data analysis and visualization.                                               |
+| tidyr     | Enables data transformations such as reformatting, cleaning, and preparing data for analysis, adhering to tidy data principles.                           |
+| knitr     | Essential for generating dynamic reports in R, supports Markdown and HTML-based documentation.                                                             |
+| plotly    | Enables creation of interactive web-based visualizations directly from R, allowing dynamic and shareable charts.                                           |
+| dplyr     | Provides tools for efficient dataset manipulation in R, including filtering, summarizing, and transforming data, crucial for data preprocessing.          |
+  
+
+<div style="margin-bottom: 15px;"></div>
+##### **B. Handling Missing Data**  
+
+```{r}
+data <- dataVG[!is.na(dataVG$Year) & dataVG$Year != "N/A", ]
+```
+**Reason**: Removing rows where the Year column is NaN or "N/A" ensures that only complete and valid data are used. Missing data can introduce bias and reduce the reliability of models. By removing them, we ensure that the analysis is based on accurate information.  
+
+<div style="margin-bottom: 15px;"></div>
+##### **C. Filtering Records based on Specific Years**    
+```{r}
+data <- data[data$Year %in% c("2008", "2009", "2007", "2010", "2006"), ]
+```
+
+```{r}
+str(data)
+```
+
+**Reason**: Selecting only rows with specific years (2006, 2007, 2008, 2009, 2010) focuses the analysis on a relevant time period or recent data that is more important for the current analysis. This reduces noise and increases the relevance of analysis results by discarding potentially irrelevant data.  
+
+<div style="margin-bottom: 15px;"></div>
+##### **D. Changing Year Column to a Factor**  
+```{r}
+data$Year <- factor(data$Year)
+```
+**Reason**: Changing the Year column to a factor is necessary because years are typically used as categorical variables in statistical analysis and visualization. By converting it to a factor, we can easily perform grouping operations, create contingency tables, and make relevant plots such as histograms or bar charts to understand the distribution of data across years.  
+<div style="margin-bottom: 15px;"></div>
+By following these preprocessing steps, the data becomes cleaner, more focused, and ready for further analysis. Good preprocessing helps minimize potential errors or biases in interpreting analysis results and enhances the ability to derive meaningful insights from the available data.  
+```{r}
+
+```
+ 
+</div>
+
+### **4.	Data Exploration**
+### **5.	Statistical Analysis**
+### **6.	Discussion**
+
+```{r}
+# Displays frequency and percentage each year (Descending)
+freq_year <- data %>%
+  group_by(Year) %>%
+  summarise(Frequency = n())
+
+freq_year <- freq_year %>%
+  mutate(Percent = (Frequency / sum(Frequency)) * 100) %>%
+  arrange(desc(Frequency))
+freq_year
+
+# Displays genre frequency and percentage (Descending)
+freq_genre <- data %>%
+  group_by(Genre) %>%
+  summarise(Frequency = n())
+freq_genre <- freq_genre %>%
+  mutate(Percent = (Frequency / sum(Frequency)) * 100) %>%
+  arrange(desc(Frequency))
+freq_genre
+
+# Displays platform frequency and percentage (Descending)
+freq_platform <- data %>%
+  group_by(Platform) %>%
+  summarise(Frequency = n())
+freq_platform <- freq_platform %>%
+  mutate(Percent = (Frequency / sum(Frequency)) * 100) %>%
+  arrange(desc(Frequency))
+freq_platform
+
+# Displays publisher frequency and percentage (Descending)
+freq_published <- data %>%
+  group_by(Publisher) %>%
+  summarise(Frequency = n()) %>%
+  mutate(Percent = (Frequency / sum(Frequency)) * 100) %>%
+  arrange(desc(Frequency))
+freq_published <- head(freq_published, 10)
+freq_published
+```
+
+```{r}
+# Visualization frequency and percentage each year
+max_freq_year <- max(freq_year$Frequency)
+ggplot(freq_year, aes(x = reorder(Year, -Frequency), y = Frequency)) +
+  geom_bar(stat = "identity", aes(fill = ifelse(Frequency == max_freq_year, "Highest", "Other"))) +
+  geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = -0.5, size = 3) +
+  labs(title = "Frequency and Percentage of Games Released Each Year",
+       x = "Year",
+       y = "Frequency",
+       fill = "Legend") +
+  scale_fill_manual(values = c("Highest" = "darkred", "Other" = "grey")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Visualization frequency and percentage each genre
+max_freq_genre <- max(freq_genre$Frequency)
+ggplot(freq_genre, aes(x = reorder(Genre, -Frequency), y = Frequency)) +
+  geom_bar(stat = "identity", aes(fill = ifelse(Frequency == max_freq_genre, "Highest", "Other"))) +
+  geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = -0.5, size = 3) +
+  labs(title = "Frequency and Percentage of Games by Genre",
+       x = "Genre",
+       y = "Frequency",
+       fill = "Legend") +
+  scale_fill_manual(values = c("Highest" = "darkblue", "Other" = "grey")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Visualization frequency and percentage each platform
+max_freq_platform <- max(freq_platform$Frequency)
+ggplot(freq_platform, aes(x = reorder(Platform, -Frequency), y = Frequency)) +
+  geom_bar(stat = "identity", aes(fill = ifelse(Frequency == max_freq_platform, "Highest", "Other"))) +
+  geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = -0.5, size = 3) +
+  labs(title = "Frequency and Percentage of Games by Platform",
+       x = "Platform",
+       y = "Frequency",
+       fill = "Legend") +
+  scale_fill_manual(values = c("Highest" = "darkgreen", "Other" = "grey")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Visualization frequency and percentage each publisher
+max_freq_publisher <- max(freq_published$Frequency)
+ggplot(freq_published, aes(x = reorder(Publisher, -Frequency), y = Frequency)) +
+  geom_bar(stat = "identity", aes(fill = ifelse(Frequency == max_freq_publisher, "Highest", "Other"))) +
+  geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = -0.5, size = 3) +
+  labs(title = "Frequency and Percentage of Games by Publisher",
+       x = "Publisher",
+       y = "Frequency",
+       fill = "Legend") +
+  scale_fill_manual(values = c("Highest" = "#B8860B", "Other" = "grey")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+top10 <- data[order(data$Global_Sales, decreasing = TRUE), ][1:10, ]
+top_game <- top10$Name[1]
+
+# Visualization Top 10 Games by Global Sales
+library(ggplot2)
+ggplot(top10, aes(x = reorder(Name, Global_Sales), y = Global_Sales)) +
+  geom_bar(stat = "identity", fill = ifelse(top10$Name == top_game, "darkred", "gray")) +
+  labs(title = "Top 10 Games by Global Sales",
+       x = "Name",
+       y = "Global Sales (in millions)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Visualization Top 10 Games by NA Sales
+ggplot(top10, aes(x = reorder(Name, NA_Sales), y = NA_Sales)) +
+  geom_bar(stat = "identity", fill = ifelse(top10$Name == top_game, "darkblue", "gray")) +
+  labs(title = "Top 10 Games by NA Sales",
+       x = "Name",
+       y = "NA Sales (in millions)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Visualization Top 10 Games by EU Sales
+ggplot(top10, aes(x = reorder(Name, EU_Sales), y = EU_Sales)) +
+  geom_bar(stat = "identity", fill = ifelse(top10$Name == top_game, "darkgreen", "gray")) +
+  labs(title = "Top 10 Games by EU Sales",
+       x = "Name",
+       y = "EU Sales (in millions)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Visualization Top 10 Games by JP Sales
+top_game_jp <- top10$Name[4]
+ggplot(top10, aes(x = reorder(Name, JP_Sales), y = JP_Sales)) +
+  geom_bar(stat = "identity", fill = ifelse(top10$Name == top_game_jp, "darkgoldenrod", "gray")) +
+  labs(title = "Top 10 Games by JP Sales",
+       x = "Name",
+       y = "JP Sales (in millions)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Visualization Top 10 Games by Other Sales
+ggplot(top10, aes(x = reorder(Name, Other_Sales), y = Other_Sales)) +
+  geom_bar(stat = "identity", fill = ifelse(top10$Name == top_game, "orangered3", "gray")) +
+  labs(title = "Top 10 Games by Other Sales",
+       x = "Name",
+       y = "Other Sales (in millions)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+```
+```{r}
+# Create a frequency table for platforms by year
+platform_by_year <- table(data$Year, data$Platform)
+print(platform_by_year)
+
+```
+
+```{r}
+# Visualization of platform frequency by year
+platform_top10 <- data[data$Platform %in% c("PS2", "X360", "PS3", "Wii", "DS", "GBA", "PSP", "PC", "DC", "GC", "XB"), ]
+platform_top10$Year <- as.numeric(levels(platform_top10$Year))[platform_top10$Year]
+
+ggplot(data = platform_top10, mapping = aes(x = Year, y = Global_Sales)) +
+    geom_bar(stat = "identity", mapping = aes(fill = Platform, color = Platform), size = 0.5, alpha = 0.9) +
+    facet_wrap(~Platform) +
+    theme_bw() +
+    xlab("") +
+    ylab("Platform Frequency by Year") +
+    theme(
+        legend.position = "none",
+        strip.text.x = element_text(margin = margin(2, 2, 2, 2), size = 10, face = "bold", color = "white"),
+        strip.background = element_rect(fill = "darkgreen", color = "black"),
+        axis.text.x = element_text(size = 10, face = "bold", angle = 90, hjust = 1),  # Rotates x-axis labels
+        axis.text.y = element_text(size = 10, face = "bold"),
+        axis.title.y = element_text(size = 10)
+    )
+```
+```{r}
+# Filter top 10 genres
+genre_sales_melted <- data %>%
+  group_by(Genre) %>%
+  summarize(
+    Global_Sales = sum(Global_Sales),
+    NA_Sales = sum(NA_Sales),
+    EU_Sales = sum(EU_Sales),
+    JP_Sales = sum(JP_Sales),
+    Other_Sales = sum(Other_Sales)
+  ) %>%
+  top_n(10, Global_Sales) %>%
+  melt(id.vars = "Genre", variable.name = "Region", value.name = "Sales")
+
+# Visualization Top 10 Genres
+ggplot(genre_sales_melted, aes(x = reorder(Genre, -Sales), y = Sales, fill = Region)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(option = "C") +  
+  theme_bw() +
+  xlab("Genre") +
+  ylab("Total Sales (in millions)") +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 10, face = "bold"),
+    axis.text.y = element_text(size = 10, face = "bold"),
+    axis.title = element_text(size = 12, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    legend.text = element_text(size = 9)
+  ) +
+  labs(title = "Top 10 Genres by Sales in Different Regions")
+```
+```{r}
+top_publishers <- data %>%
+  group_by(Publisher) %>%
+  summarize(
+    NA_Sales = sum(NA_Sales),
+    EU_Sales = sum(EU_Sales),
+    JP_Sales = sum(JP_Sales),
+    Other_Sales = sum(Other_Sales),
+    Global_Sales = sum(Global_Sales)
+  ) %>%
+  top_n(10, Global_Sales)  # Filter top 10 based on Global Sales
+
+# Melt the data
+publishers_sales_melted <- top_publishers %>%
+  melt(id.vars = "Publisher", variable.name = "Region", value.name = "Sales")
+
+# Visualization Top 10 Publishers
+ggplot(publishers_sales_melted, aes(x = reorder(Publisher, -Sales), y = Sales, fill = Region)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(option = "inferno", direction = -1) +  # Use a gradient color scale suitable for factors
+  theme_bw() +
+  xlab("Publisher") +
+  ylab("Total Sales (in millions)") +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 10, face = "bold"),
+    axis.text.y = element_text(size = 10, face = "bold"),
+    axis.title = element_text(size = 12, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    legend.text = element_text(size = 9)
+  ) +
+  labs(title = "Top 10 Publishers by Sales in Different Regions") +
+  guides(fill = guide_legend(title = "Region"))
+```
+
+
+```{r}
+Top_interactive <- ggplotly(publishers_sales_melted)
+Top_interactive
+```
+
+```{r}
+# Chi-Square test for Year, Genre, Platform, and Publisher distributions
+chi_year <- chisq.test(freq_year$Frequency)
+chi_genre <- chisq.test(freq_genre$Frequency)
+chi_platform <- chisq.test(freq_platform$Frequency)
+chi_publisher <- chisq.test(freq_published$Frequency)
+
+results <- data.frame(
+  Test = c("Year", "Genre", "Platform", "Publisher"),
+  ChiSquareStatistic = c(chi_year$statistic, chi_genre$statistic, chi_platform$statistic, chi_publisher$statistic),
+  PValue = c(chi_year$p.value, chi_genre$p.value, chi_platform$p.value, chi_publisher$p.value)
+)
+
+# Print the results in a formatted table with headers
+kable(results, format = "markdown", align = "c", caption = "Chi-Square test results for Year, Genre, Platform, and Publisher distributions") %>%
+  kableExtra::kable_styling(full_width = FALSE)
+```
+```{r}
+# Perform Kruskal-Wallis test for the platform
+kruskal_test_platform <- kruskal.test(Global_Sales ~ Platform, data = platform_top10)
+
+# Perform the Kruskal-Wallis test for sales by name
+kruskal_test_Global <- kruskal.test(Global_Sales ~ Name, data = top10)
+kruskal_test_NA <- kruskal.test(NA_Sales ~ Name, data = top10)
+kruskal_test_EU <- kruskal.test(EU_Sales ~ Name, data = top10)
+kruskal_test_JP <- kruskal.test(JP_Sales ~ Name, data = top10)
+kruskal_test_Other <- kruskal.test(Other_Sales ~ Name, data = top10)
+
+results <- data.frame(
+  Variable = c("Global Sales", "NA Sales", "EU Sales", "JP Sales", "Other Sales", "Platform"),
+  Statistic = c(kruskal_test_Global$statistic, kruskal_test_NA$statistic, kruskal_test_EU$statistic,
+                kruskal_test_JP$statistic, kruskal_test_Other$statistic, kruskal_test_platform$statistic),
+  P_value = c(kruskal_test_Global$p.value, kruskal_test_NA$p.value, kruskal_test_EU$p.value,
+              kruskal_test_JP$p.value, kruskal_test_Other$p.value, kruskal_test_platform$p.value)
+)
+results$P_value <- sprintf("%.3f", results$P_value)
+
+# Displays results in table form
+results %>%
+  kable(format = "markdown", align = c("l", "c", "c"), caption = "Kruskal-Wallis Test Results for Sales of Game Names by Region and Platform") %>%
+  kableExtra::kable_styling(full_width = FALSE)
+```
+
+```{r}
+# Perform Kruskal-Wallis tests for sales by genre in various regions
+kruskal_test_Global <- kruskal.test(Sales ~ Genre, data = genre_sales_melted %>% filter(Region == "Global_Sales"))
+kruskal_test_NA <- kruskal.test(Sales ~ Genre, data = genre_sales_melted %>% filter(Region == "NA_Sales"))
+kruskal_test_EU <- kruskal.test(Sales ~ Genre, data = genre_sales_melted %>% filter(Region == "EU_Sales"))
+kruskal_test_JP <- kruskal.test(Sales ~ Genre, data = genre_sales_melted %>% filter(Region == "JP_Sales"))
+kruskal_test_Other <- kruskal.test(Sales ~ Genre, data = genre_sales_melted %>% filter(Region == "Other_Sales"))
+
+results <- data.frame(
+  Variable = c("Global Sales", "NA Sales", "EU Sales", "JP Sales", "Other Sales"),
+  Statistic = c(kruskal_test_Global$statistic, kruskal_test_NA$statistic, kruskal_test_EU$statistic,
+                kruskal_test_JP$statistic, kruskal_test_Other$statistic),
+  P_value = c(kruskal_test_Global$p.value, kruskal_test_NA$p.value, kruskal_test_EU$p.value,
+              kruskal_test_JP$p.value, kruskal_test_Other$p.value)
+)
+results$P_value <- sprintf("%.3f", results$P_value)
+
+# Displays results in table form
+results %>%
+  kable(format = "markdown", align = c("l", "c", "c"), caption = "Kruskal-Wallis Test Results for Sales of Genres by Region") %>%
+  kableExtra::kable_styling(full_width = FALSE)
+```
+```{r}
+# Perform Kruskal-Wallis test for sales by publisher in each region
+kruskal_test_Global <- kruskal.test(Sales ~ Publisher, data = publishers_sales_melted %>% filter(Region == "Global_Sales"))
+kruskal_test_NA <- kruskal.test(Sales ~ Publisher, data = publishers_sales_melted %>% filter(Region == "NA_Sales"))
+kruskal_test_EU <- kruskal.test(Sales ~ Publisher, data = publishers_sales_melted %>% filter(Region == "EU_Sales"))
+kruskal_test_JP <- kruskal.test(Sales ~ Publisher, data = publishers_sales_melted %>% filter(Region == "JP_Sales"))
+kruskal_test_Other <- kruskal.test(Sales ~ Publisher, data = publishers_sales_melted %>% filter(Region == "Other_Sales"))
+
+results <- data.frame(
+  Variable = c("Global Sales", "NA Sales", "EU Sales", "JP Sales", "Other Sales"),
+  Statistic = c(kruskal_test_Global$statistic, kruskal_test_NA$statistic, kruskal_test_EU$statistic,
+                kruskal_test_JP$statistic, kruskal_test_Other$statistic),
+  P_value = c(kruskal_test_Global$p.value, kruskal_test_NA$p.value, kruskal_test_EU$p.value,
+              kruskal_test_JP$p.value, kruskal_test_Other$p.value)
+)
+results$P_value <- sprintf("%.3f", results$P_value)
+
+# Displays results in table form
+results %>%
+  kable(format = "markdown", align = c("l", "c", "c"), caption = "Kruskal-Wallis Test Results for Sales of Publishers by Region") %>%
+  kableExtra::kable_styling(full_width = FALSE)
+```
+```{r}
+top5 <- ggplot(publishers_sales_melted, aes(x = reorder(Publisher, -Sales), y = Sales, fill = Region)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c(
+    "NA_Sales" = "#800000",  
+    "EU_Sales" = "#A52A2A",  
+    "JP_Sales" = "#CD5C5C",   
+    "Other_Sales" = "#E9967A" 
+  )) +
+  theme_bw() +
+  xlab("Publisher") +
+  ylab("Total Sales (in millions)") +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 10, face = "bold"),
+    axis.text.y = element_text(size = 10, face = "bold"),
+    axis.title = element_text(size = 12, face = "bold"),
+    legend.title = element_text(size = 10, face = "bold"),
+    legend.text = element_text(size = 9)
+  ) +
+  labs(title = "Top 10 Publishers by Sales in Different Regions") +
+  guides(fill = guide_legend(title = "Region"))
+
+Top5_interactive <- ggplotly(top5)
+Top5_interactive
+```
+
